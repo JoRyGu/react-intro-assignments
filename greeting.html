@@ -12,16 +12,43 @@
         
         <script type="text/babel">
             class HelloThere extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        date: new Date()
+                    }
+                }
+
+                componentDidMount() {
+                    this.timerID = setInterval(
+                        () => {
+                            this.tick(), 1000
+                        }
+                    )
+                }
+
+                componentWillUnmount() {
+                    clearInterval(this.timerID);
+                }
+
+                tick() {
+                    this.setState({
+                        date: new Date()
+                    });
+                }
+
                 render() {
                     return (
                         <div>
-                            <iframe src="https://giphy.com/embed/3ornk57KwDXf81rjWM" width="480" height="259" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                            <h1>Hello there, {this.props.name}!</h1>
+                            <iframe src="https://giphy.com/embed/3ornk57KwDXf81rjWM" width="480" height="259" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
+                            <h2>The time is now {this.state.date.toLocaleTimeString()}.</h2>
                         </div>
                     );
                 }
             }
             ReactDOM.render(
-                <HelloThere />, document.getElementById('app')
+                <HelloThere name="Josh"/>, document.getElementById('app')
             );
         </script>
     </body>
